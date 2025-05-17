@@ -1,18 +1,36 @@
 export default function Footer() {
     return (
-        <footer className="footer p-10 bg-base-200 text-base-content mt-16">
-            <aside>
-                <h2 className="text-xl font-bold text-blue-600">DeviceLoop</h2>
-                <p>Creating circular impact for people + planet.<br />© {new Date().getFullYear()} DeviceLoop, Inc.</p>
-            </aside>
-            <nav>
-                <h6 className="footer-title">Social</h6>
-                <div className="grid grid-flow-col gap-4">
-                    <a href="#"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v7/icons/github.svg" alt="GitHub" className="w-5 h-5" /></a>
-                    <a href="#"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v7/icons/twitter.svg" alt="Twitter" className="w-5 h-5" /></a>
-                    <a href="#"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v7/icons/linkedin.svg" alt="LinkedIn" className="w-5 h-5" /></a>
+        <footer className="bg-surface text-text py-10 px-6">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Nav Links */}
+                <div>
+                    <h4 className="text-lg font-semibold mb-3 text-primary">Explore</h4>
+                    <ul className="space-y-2">
+                        <li><a href="/about" className="hover:text-primary">About</a></li>
+                        <li><a href="/how-it-works" className="hover:text-primary">How It Works</a></li>
+                        <li><a href="/impact" className="hover:text-primary">Impact</a></li>
+                        <li><a href="/faq" className="hover:text-primary">FAQ</a></li>
+                        <li><a href="/locations" className="hover:text-primary">Locations</a></li>
+                        <li><a href="/contact" className="hover:text-primary">Contact</a></li>
+                    </ul>
                 </div>
-            </nav>
+
+                {/* Legal Links */}
+                <div>
+                    <h4 className="text-lg font-semibold mb-3 text-primary">Legal</h4>
+                    <ul className="space-y-2">
+                        <li><a href="/privacy-policy" className="hover:text-primary">Privacy Policy</a></li>
+                        <li><a href="/terms" className="hover:text-primary">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                {/* Branding / Message */}
+                <div className="flex flex-col justify-between">
+                    <h4 className="text-xl font-bold text-primary">DeviceLoop</h4>
+                    <p className="mt-4 italic">Loop for good.</p>
+                    <p className="text-sm text-gray-500 mt-6">© 2025 DeviceLoop. All rights reserved.</p>
+                </div>
+            </div>
         </footer>
-    )
+    );
 }

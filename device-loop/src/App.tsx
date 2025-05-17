@@ -8,7 +8,7 @@ import Footer from './components/Footer'
 
 function App() {
     return (
-        <div className="min-h-screen bg-base-100">
+        <div data-theme="deviceloop"  className="min-h-screen bg-base-100">
             <NavBar />
             <div className="px-6 py-8">
                 <Routes>

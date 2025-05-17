@@ -1,16 +1,22 @@
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
+import About from './pages/About'
+import Contact from './pages/Contact'
+import HowItWorks from './pages/HowItWorks'
+import NavBar from './components/NavBar'
 
 function App() {
     return (
-        <div className="p-6">
-            <nav className="space-x-4 text-blue-600">
-                <Link to="/">Home</Link>
-                <Link to="/about">About</Link>
-            </nav>
-            <Routes>
-                <Route path="/" element={<h1 className="text-2xl">Welcome to DeviceLoop</h1>} />
-                <Route path="/about" element={<p>This is the about page.</p>} />
-            </Routes>
+        <div className="min-h-screen bg-base-100">
+            <NavBar />
+            <div className="px-6 py-8">
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/how-it-works" element={<HowItWorks />} />
+                </Routes>
+            </div>
         </div>
     )
 }

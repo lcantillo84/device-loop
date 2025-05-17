@@ -1,21 +1,28 @@
 export default function HowItWorks() {
     return (
-        <div className="min-h-screen bg-base-100 p-8">
-            <div className="max-w-5xl mx-auto">
-                <h1 className="text-4xl font-bold mb-6 text-center">How DeviceLoop Works</h1>
-
-                <ul className="steps steps-vertical lg:steps-horizontal w-full text-lg">
-                    <li className="step step-primary">Drop off or mail in your device</li>
-                    <li className="step step-primary">We assess and refurbish or recycle it</li>
-                    <li className="step step-primary">You get paid or donate the value</li>
-                    <li className="step step-primary">We plant a tree for every device</li>
-                </ul>
-
-                <div className="mt-10 prose lg:prose-xl text-center mx-auto">
-                    <p>
-                        Whether your device is working or not, we make sure it finds a second life or becomes part of something better.
-                        Every item avoids the landfill and gives back to the planet.
-                    </p>
+        <div className="bg-base-100 p-10 text-gray-800 max-w-6xl mx-auto">
+            <h2 className="text-4xl font-bold text-center text-blue-600 mb-10">How It Works</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="card bg-white shadow-xl">
+                    <figure><img src="https://via.placeholder.com/400x200?text=Drop+Your+Device" alt="Drop your device" /></figure>
+                    <div className="card-body">
+                        <h3 className="card-title">1. Drop Your Device</h3>
+                        <p>Find a DeviceLoop kiosk or request a prepaid mail-in kit to send us your unused devices.</p>
+                    </div>
+                </div>
+                <div className="card bg-white shadow-xl">
+                    <figure><img src="https://via.placeholder.com/400x200?text=Analyze+and+Refurbish" alt="Analyze device" /></figure>
+                    <div className="card-body">
+                        <h3 className="card-title">2. Analyze & Refurbish</h3>
+                        <p>We inspect, wipe, and refurbish devices when possible — or recycle them safely.</p>
+                    </div>
+                </div>
+                <div className="card bg-white shadow-xl">
+                    <figure><img src="https://via.placeholder.com/400x200?text=Plant+a+Tree" alt="Tree planting" /></figure>
+                    <div className="card-body">
+                        <h3 className="card-title">3. Plant a Tree</h3>
+                        <p>For every device, we plant a tree — and track the impact in your dashboard.</p>
+                    </div>
                 </div>
             </div>
         </div>

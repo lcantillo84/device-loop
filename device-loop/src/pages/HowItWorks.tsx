@@ -1,30 +1,60 @@
+import { Link } from "react-router-dom";
+import { Truck, Cpu, TreeDeciduous } from "lucide-react";
+import { motion } from "framer-motion";
+
 export default function HowItWorks() {
+    const steps = [
+        {
+            icon: <Truck size={48} />,
+            title: "Drop Your Device",
+            desc:
+                "Find a DeviceLoop kiosk, schedule a robot pickup, or request a free mail-in kit—anywhere in the U.S.",
+        },
+        {
+            icon: <Cpu size={48} />,
+            title: "Analyze & Refurbish",
+            desc:
+                "We inspect each device: working ones get a second life, non-working ones yield valuable parts.",
+        },
+        {
+            icon: <TreeDeciduous size={48} />,
+            title: "Plant a Tree",
+            desc:
+                "For every device collected, we plant a tree—and you can track your impact in real time.",
+        },
+    ];
+
     return (
-        <div className="bg-base-100 p-10 text-gray-800 max-w-6xl mx-auto">
-            <h2 className="text-4xl font-bold text-center text-blue-600 mb-10">How It Works</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="card bg-white shadow-xl">
-                    <figure><img src="https://via.placeholder.com/400x200?text=Drop+Your+Device" alt="Drop your device" /></figure>
-                    <div className="card-body">
-                        <h3 className="card-title">1. Drop Your Device</h3>
-                        <p>Find a DeviceLoop kiosk or request a prepaid mail-in kit to send us your unused devices.</p>
-                    </div>
+        <section className="bg-surface text-text py-20 px-6">
+            <div className="max-w-6xl mx-auto">
+                <h2 className="text-4xl font-bold text-center text-primary mb-16">
+                    How DeviceLoop Works
+                </h2>
+
+                <div className="flex flex-col md:flex-row md:space-x-8 space-y-8 md:space-y-0">
+                    {steps.map((step, idx) => (
+                        <motion.div
+                            key={idx}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: idx * 0.2 }}
+                            className="flex-1 bg-base-100 p-8 rounded-2xl shadow-lg flex flex-col items-center text-center"
+                        >
+                            <div className="p-4 bg-primary text-white rounded-full mb-4">
+                                {step.icon}
+                            </div>
+                            <h3 className="text-2xl font-semibold mb-2">{step.title}</h3>
+                            <p className="text-lg">{step.desc}</p>
+                        </motion.div>
+                    ))}
                 </div>
-                <div className="card bg-white shadow-xl">
-                    <figure><img src="https://via.placeholder.com/400x200?text=Analyze+and+Refurbish" alt="Analyze device" /></figure>
-                    <div className="card-body">
-                        <h3 className="card-title">2. Analyze & Refurbish</h3>
-                        <p>We inspect, wipe, and refurbish devices when possible — or recycle them safely.</p>
-                    </div>
-                </div>
-                <div className="card bg-white shadow-xl">
-                    <figure><img src="https://via.placeholder.com/400x200?text=Plant+a+Tree" alt="Tree planting" /></figure>
-                    <div className="card-body">
-                        <h3 className="card-title">3. Plant a Tree</h3>
-                        <p>For every device, we plant a tree — and track the impact in your dashboard.</p>
-                    </div>
+
+                <div className="text-center mt-16">
+                    <Link to="/get-started" className="btn btn-primary">
+                        Get Started
+                    </Link>
                 </div>
             </div>
-        </div>
-    )
+        </section>
+    );
 }

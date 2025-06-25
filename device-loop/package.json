@@ -37,5 +37,11 @@
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.30.1",
     "vite": "^6.3.5"
+  },
+  "PayPal": {
+    "ClientId": "AZISbH-MxQHr7tvhs3v7Q0-ZvN_gJWMVu8Ol6LyE9HFqelrX1Qu5yXit6L28vRwVSberUVEcUqumc2_n",
+    "Secret": "AZISbH-MxQHr7tvhs3v7Q0-ZvN_gJWMVu8Ol6LyE9HFqelrX1Qu5yXit6L28vRwVSberUVEcUqumc2_n",
+    "BaseUrl": "https://api-m.sandbox.paypal.com"
   }
+
 }

@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: device-loop-backend
+    rootDir: backend
+    runtime: dotnet
+    buildCommand: dotnet publish -c Release -o out
+    startCommand: dotnet out/backend.dll
+    buildFilter:
+      paths:
+        - backend/**
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production

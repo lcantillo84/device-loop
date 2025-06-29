@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 
 export default function Tech2TreesBadge() {
     const [imageURL, setImageURL] = useState<string | null>(null);
-    const [badgeStyle, setBadgeStyle] = useState('eco-warrior');
+    const [badgeStyle, setBadgeStyle] = useState<keyof typeof badgeStyles>('eco-warrior');
     const [showSuccess, setShowSuccess] = useState(false);
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -228,7 +228,7 @@ export default function Tech2TreesBadge() {
                         Choose Your Hero Status
                     </h3>
                     <div className="flex flex-wrap justify-center gap-4">
-                        {Object.entries(badgeStyles).map(([key, style]) => (
+                        {(Object.entries(badgeStyles) as [keyof typeof badgeStyles, typeof badgeStyles[keyof typeof badgeStyles]][]).map(([key, style]) => (
                             <button
                                 key={key}
                                 onClick={() => setBadgeStyle(key)}

@@ -40,6 +40,12 @@ export default function NavBar() {
                         Price Your Device
                     </Link>
                     <Link
+                        to="/badge"
+                        className="btn btn-outline btn-primary px-4 py-1 ml-4"
+                    >
+                        upload selfie
+                    </Link>
+                    <Link
                         to="/contact"
                         className="btn btn-outline btn-primary px-4 py-1 ml-4"
                     >

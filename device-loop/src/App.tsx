@@ -6,6 +6,7 @@ import HowItWorks from './pages/HowItWorks'
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import PriceYourDevice from "./pages/PriceYourDevice.tsx";
+import SelfieBadgePage from './pages/SelfieBadgePage'
 
 function App() {
     return (
@@ -18,6 +19,8 @@ function App() {
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/how-it-works" element={<HowItWorks />} />
                     <Route path="/pricedevice" element={<PriceYourDevice />} />
+                    <Route path="/badge" element={<SelfieBadgePage />} />
+
                 </Routes>
             </div>
             <Footer />

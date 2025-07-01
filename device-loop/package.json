@@ -2,7 +2,7 @@
   "name": "device-loop",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://deviceloop.io",
+  "homepage": "https://tech2trees.com",
   "type": "module",
   "scripts": {
     "dev": "vite",

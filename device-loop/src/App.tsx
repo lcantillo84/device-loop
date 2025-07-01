@@ -8,6 +8,7 @@ import Footer from './components/Footer'
 import PriceYourDevice from "./pages/PriceYourDevice.tsx";
 import SelfieBadgePage from './pages/SelfieBadgePage'
 
+
 function App() {
     return (
         <div data-theme="deviceloop"  className="min-h-screen bg-base-100">
@@ -20,7 +21,8 @@ function App() {
                     <Route path="/how-it-works" element={<HowItWorks />} />
                     <Route path="/pricedevice" element={<PriceYourDevice />} />
                     <Route path="/badge" element={<SelfieBadgePage />} />
-
+                    <Route path="/badge-create" element={<SelfieBadgePage />} />
+                    <Route path="/donate-steps" element={<SelfieBadgePage />} />
                 </Routes>
             </div>
             <Footer />

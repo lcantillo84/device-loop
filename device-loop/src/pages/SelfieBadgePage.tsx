@@ -320,10 +320,10 @@ export default function Tech2TreesDonation() {
             <div className="max-w-6xl mx-auto px-6 py-12">
                 {/* Navigation */}
                 <div className="flex justify-center mb-12">
-                    <div className="bg-white rounded-2xl p-2 shadow-lg">
+                    <div className="bg-white rounded-2xl p-2 shadow-lg flex flex-row w-full max-w-md mx-auto">
                         <button
                             onClick={() => setCurrentSection('instructions')}
-                            className={`px-8 py-4 rounded-xl font-semibold transition-all ${
+                            className={`flex-1 px-3 py-4 rounded-xl font-semibold transition-all text-sm ${
                                 currentSection === 'instructions'
                                     ? 'bg-green-600 text-white shadow-lg'
                                     : 'text-green-700 hover:bg-green-50'
@@ -333,7 +333,7 @@ export default function Tech2TreesDonation() {
                         </button>
                         <button
                             onClick={() => setCurrentSection('badge')}
-                            className={`px-8 py-4 rounded-xl font-semibold transition-all ${
+                            className={`flex-1 px-3 py-4 rounded-xl font-semibold transition-all text-sm ml-2 ${
                                 currentSection === 'badge'
                                     ? 'bg-green-600 text-white shadow-lg'
                                     : 'text-green-700 hover:bg-green-50'
@@ -483,112 +483,133 @@ export default function Tech2TreesDonation() {
                 )}
 
                 {currentSection === 'badge' && (
-                    <>
-                        {/* Badge Style Selector */}
-                        <div className="mb-8">
-                            <h3 className="text-2xl font-semibold text-green-800 mb-4 text-center">
-                                Choose Your Hero Status
-                            </h3>
-                            <div className="flex flex-wrap justify-center gap-4">
-                                {(Object.entries(badgeStyles) as [keyof typeof badgeStyles, typeof badgeStyles[keyof typeof badgeStyles]][]).map(([key, style]) => (
+                    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 -mx-6 -mb-12 px-6 pb-12">
+                        <div className="max-w-4xl mx-auto pt-8">
+                            {/* Badge Style Selector */}
+                            <div className="mb-8">
+                                <h3 className="text-2xl font-semibold text-green-800 mb-4 text-center">
+                                    Choose Your Hero Status
+                                </h3>
+                                <div className="flex flex-wrap justify-center gap-4">
+                                    {(Object.entries(badgeStyles) as [keyof typeof badgeStyles, typeof badgeStyles[keyof typeof badgeStyles]][]).map(([key, style]) => (
+                                        <button
+                                            key={key}
+                                            onClick={() => setBadgeStyle(key)}
+                                            className={`px-6 py-3 rounded-xl font-semibold transition-all transform hover:scale-105 ${
+                                                badgeStyle === key
+                                                    ? 'bg-green-600 text-white shadow-lg'
+                                                    : 'bg-white text-green-700 hover:bg-green-50 border-2 border-green-200'
+                                            }`}
+                                        >
+                                            {style.name}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Upload Section */}
+                            <div className="bg-white rounded-3xl shadow-xl p-8 mb-8">
+                                <div className="text-center mb-6">
+                                    <h2 className="text-3xl font-bold text-green-800 mb-2">
+                                        📸 Upload Your Selfie
+                                    </h2>
+                                    <p className="text-xl text-green-600">
+                                        Time to show off your eco-hero status!
+                                    </p>
+                                </div>
+
+                                <div className="mb-6">
+                                    <label className="block w-full">
+                                        <div className="border-4 border-dashed border-green-300 rounded-2xl p-8 text-center hover:border-green-500 transition-colors cursor-pointer">
+                                            <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={handleImageUpload}
+                                                className="hidden"
+                                            />
+                                            <div className="text-6xl mb-4">📱➡️🌳</div>
+                                            <p className="text-lg text-green-700 font-semibold">
+                                                Click to upload your selfie
+                                            </p>
+                                            <p className="text-green-600 mt-2">
+                                                Make it Instagram-worthy! 📸✨
+                                            </p>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                {/* Canvas */}
+                                <div className="flex justify-center mb-6">
+                                    <canvas
+                                        ref={canvasRef}
+                                        width={800}
+                                        height={800}
+                                        className="rounded-2xl shadow-2xl bg-gradient-to-br from-green-400 to-emerald-600 max-w-full h-auto"
+                                    />
+                                </div>
+
+                                {/* Action Buttons */}
+                                <div className="flex flex-wrap justify-center gap-4">
                                     <button
-                                        key={key}
-                                        onClick={() => setBadgeStyle(key)}
-                                        className={`px-6 py-3 rounded-xl font-semibold transition-all transform hover:scale-105 ${
-                                            badgeStyle === key
-                                                ? 'bg-green-600 text-white shadow-lg'
-                                                : 'bg-white text-green-700 hover:bg-green-50 border-2 border-green-200'
-                                        }`}
+                                        onClick={handleGenerateBadge}
+                                        disabled={!imageURL}
+                                        className="px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-bold rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:from-green-700 hover:to-emerald-700 transition-all transform hover:scale-105 shadow-lg"
                                     >
-                                        {style.name}
+                                        🎨 Create My Badge
                                     </button>
-                                ))}
+
+                                    <button
+                                        onClick={handleShare}
+                                        className="px-8 py-4 bg-gradient-to-r from-yellow-500 to-amber-500 text-white font-bold rounded-xl hover:from-yellow-600 hover:to-amber-600 transition-all transform hover:scale-105 shadow-lg"
+                                    >
+                                        📤 Share & Inspire
+                                    </button>
+
+                                    <button
+                                        onClick={handleDownload}
+                                        className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all transform hover:scale-105 shadow-lg"
+                                    >
+                                        💾 Download Badge
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Impact Stats */}
+                            <div className="grid md:grid-cols-3 gap-6 mb-8">
+                                <div className="bg-white rounded-2xl p-6 text-center shadow-lg">
+                                    <div className="text-4xl mb-2">🌱</div>
+                                    <div className="text-2xl font-bold text-green-800">Trees Planted</div>
+                                    <div className="text-green-600">Every device = More green</div>
+                                </div>
+                                <div className="bg-white rounded-2xl p-6 text-center shadow-lg">
+                                    <div className="text-4xl mb-2">♻️</div>
+                                    <div className="text-2xl font-bold text-green-800">E-Waste Reduced</div>
+                                    <div className="text-green-600">Keeping tech out of landfills</div>
+                                </div>
+                                <div className="bg-white rounded-2xl p-6 text-center shadow-lg">
+                                    <div className="text-4xl mb-2">🌍</div>
+                                    <div className="text-2xl font-bold text-green-800">Impact Made</div>
+                                    <div className="text-green-600">Together we're changing the world</div>
+                                </div>
+                            </div>
+
+                            {/* Social Media Copy */}
+                            <div className="bg-white rounded-2xl p-6 shadow-lg">
+                                <h3 className="text-2xl font-bold text-green-800 mb-4 text-center">
+                                    📱 Ready-to-Share Caption
+                                </h3>
+                                <div className="bg-gray-50 rounded-xl p-4 font-mono text-sm">
+                                    <p className="text-gray-800 leading-relaxed">
+                                        🌱 Just donated my old device to @Tech2Trees and earned my Eco Warrior badge!
+                                        Every phone donated helps plant trees and keeps e-waste out of landfills.
+                                        Join me in making a real impact! 🌍💚
+                                        <br/><br/>
+                                        #Tech2Trees #EcoWarrior #Sustainability #ClimateAction #TechForGood #GreenTech #PlantTrees #EWaste #MakeADifference
+                                    </p>
+                                </div>
                             </div>
                         </div>
-
-                        {/* Upload Section */}
-                        <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
-                            <div className="text-center mb-4">
-                                <h2 className="text-2xl font-bold text-green-800 mb-2">
-                                    📸 Upload Your Selfie
-                                </h2>
-                                <p className="text-green-600">
-                                    Show off your eco-hero status!
-                                </p>
-                            </div>
-
-                            <div className="mb-4">
-                                <label className="block w-full">
-                                    <div className="border-2 border-dashed border-green-300 rounded-xl p-6 text-center hover:border-green-500 transition-colors cursor-pointer">
-                                        <input
-                                            type="file"
-                                            accept="image/*"
-                                            onChange={handleImageUpload}
-                                            className="hidden"
-                                        />
-                                        <div className="text-4xl mb-2">📱➡️🌳</div>
-                                        <p className="text-green-700 font-semibold">
-                                            Click to upload your selfie
-                                        </p>
-                                        <p className="text-green-600 text-sm mt-1">
-                                            Make it Instagram-worthy! 📸✨
-                                        </p>
-                                    </div>
-                                </label>
-                            </div>
-
-                            {/* Canvas */}
-                            <div className="flex justify-center mb-4">
-                                <canvas
-                                    ref={canvasRef}
-                                    width={600}
-                                    height={600}
-                                    className="rounded-xl shadow-lg bg-gradient-to-br from-green-400 to-emerald-600 max-w-full h-auto"
-                                />
-                            </div>
-
-                            {/* Action Buttons */}
-                            <div className="flex flex-wrap justify-center gap-3">
-                                <button
-                                    onClick={handleGenerateBadge}
-                                    disabled={!imageURL}
-                                    className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-bold rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:from-green-700 hover:to-emerald-700 transition-all transform hover:scale-105 shadow-lg text-sm"
-                                >
-                                    🎨 Create Badge
-                                </button>
-
-                                <button
-                                    onClick={handleShare}
-                                    className="px-6 py-3 bg-gradient-to-r from-yellow-500 to-amber-500 text-white font-bold rounded-xl hover:from-yellow-600 hover:to-amber-600 transition-all transform hover:scale-105 shadow-lg text-sm"
-                                >
-                                    📤 Share
-                                </button>
-
-                                <button
-                                    onClick={handleDownload}
-                                    className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all transform hover:scale-105 shadow-lg text-sm"
-                                >
-                                    💾 Download
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Social Media Copy */}
-                        <div className="bg-white rounded-2xl p-6 shadow-lg">
-                            <h3 className="text-xl font-bold text-green-800 mb-3 text-center">
-                                📱 Ready-to-Share Caption
-                            </h3>
-                            <div className="bg-gray-50 rounded-xl p-4 font-mono text-xs">
-                                <p className="text-gray-800 leading-relaxed">
-                                    🌱 Just donated my old device to @Tech2Trees and earned my Eco Warrior badge!
-                                    Every phone donated helps plant trees and keeps e-waste out of landfills.
-                                    Join me in making a real impact! 🌍💚
-                                    <br/><br/>
-                                    #Tech2Trees #EcoWarrior #Sustainability #ClimateAction #TechForGood
-                                </p>
-                            </div>
-                        </div>
-                    </>
+                    </div>
                 )}
 
                 {/* Legal Compliance Section */}

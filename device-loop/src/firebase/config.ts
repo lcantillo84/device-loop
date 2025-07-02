@@ -1,9 +1,8 @@
-// src/firebase/config.js
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
-// Your Firebase config (paste the config you saved from Step 1)
+// Your Firebase config
 const firebaseConfig = {
     apiKey: "AIzaSyAhkLnk83XQvXDb5KpqcoKudvoMippOqAk",
     authDomain: "deviceloop0516.firebaseapp.com",
@@ -17,7 +16,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize services
+// Initialize and EXPORT services
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 

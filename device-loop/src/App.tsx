@@ -11,7 +11,7 @@ import SelfieBadgePage from './pages/SelfieBadgePage'
 
 function App() {
     return (
-        <div data-theme="deviceloop"  className="min-h-screen bg-base-100">
+        <div data-theme="deviceloop"  className="min-h-screen bg-base-100 dark:bg-gray-900 transition-colors duration-300">
             <NavBar />
             <div className="">
                 <Routes>

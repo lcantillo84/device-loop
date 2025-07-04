@@ -44,7 +44,7 @@ using (var scope = app.Services.CreateScope())
     var seeder = scope.ServiceProvider.GetRequiredService<DeviceDataSeeder>();
     
     await context.Database.EnsureCreatedAsync();
-    await seeder.SeedFromJsonAsync("Data/devices.json");
+    await seeder.SeedFromJsonAsync("Data/test.json");
 }
 
 if (app.Environment.IsDevelopment())

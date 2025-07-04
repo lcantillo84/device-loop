@@ -50,21 +50,41 @@ using (var scope = app.Services.CreateScope())
     
     try
     {
+        Console.WriteLine("Starting database initialization...");
+        
         // Ensure database is created
         await context.Database.EnsureCreatedAsync();
+        Console.WriteLine("Database created/verified");
+        
+        // Check if data exists
+        var deviceCount = await context.Devices.CountAsync();
+        Console.WriteLine($"Current device count: {deviceCount}");
         
         // Only seed if there's no data yet
-        if (!context.Devices.Any())
+        if (deviceCount == 0)
         {
-            await seeder.SeedFromJsonAsync("Data/test.json");
-            Console.WriteLine("Database seeded with initial data");
+            Console.WriteLine("No devices found, attempting to seed...");
+            Console.WriteLine("Looking for Data/test.json file...");
+            
+            if (File.Exists("Data/test.json"))
+            {
+                Console.WriteLine("JSON file found, starting seeding...");
+                await seeder.SeedFromJsonAsync("Data/test.json");
+                
+                var newCount = await context.Devices.CountAsync();
+                Console.WriteLine($"Seeding completed. New device count: {newCount}");
+            }
+            else
+            {
+                Console.WriteLine("ERROR: Data/test.json file not found!");
+            }
         }
         else
         {
             Console.WriteLine("Database already has data, skipping seeding");
         }
         
-        Console.WriteLine("Database initialized successfully");
+        Console.WriteLine("Database initialization completed");
     }
     catch (Exception ex)
     {

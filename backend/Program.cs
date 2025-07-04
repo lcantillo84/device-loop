@@ -43,7 +43,7 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     var seeder = scope.ServiceProvider.GetRequiredService<DeviceDataSeeder>();
     
-    await context.Database.EnsureCreatedAsync();
+    context.Database.Migrate();
     await seeder.SeedFromJsonAsync("Data/test.json");
 }
 

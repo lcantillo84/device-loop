@@ -785,7 +785,7 @@ const PriceYourDevice = () => {
     const fetchBrands = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`${API_BASE_URL}/api/devices/brands`);
+            const response = await fetch(`${API_BASE_URL}/devices/brands`);
             if (!response.ok) throw new Error('Failed to fetch brands');
             const brandsData = await response.json();
             setBrands(brandsData);
@@ -800,7 +800,7 @@ const PriceYourDevice = () => {
     const fetchDevicesByBrand = async (brand: string) => {
         try {
             setLoading(true);
-            const response = await fetch(`${API_BASE_URL}/api/devices/search?brand=${encodeURIComponent(brand)}`);
+            const response = await fetch(`${API_BASE_URL}/devices/search?brand=${encodeURIComponent(brand)}`);
             if (!response.ok) throw new Error('Failed to fetch devices');
             const devicesData = await response.json();
             setAvailableDevices(devicesData);

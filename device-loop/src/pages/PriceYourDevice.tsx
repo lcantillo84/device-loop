@@ -658,7 +658,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 // API configuration
 const API_BASE_URL = process.env.NODE_ENV === 'production'
-    ? 'https://your-backend-url.com' // We'll update this after deployment
+    ? 'device-loop-backend-production.up.railway.app' // We'll update this after deployment
     : 'http://localhost:5285';
 
 // Types for your backend data

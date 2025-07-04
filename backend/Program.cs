@@ -6,11 +6,23 @@ using System.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Get connection string - Railway's DATABASE_URL takes priority
-var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") 
-    ?? builder.Configuration.GetConnectionString("DefaultConnection");
+// Get connection string and convert Railway format to Entity Framework format
+var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
 
-// Add services
+if (!string.IsNullOrEmpty(connectionString) && connectionString.StartsWith("postgres://"))
+{
+    // Convert Railway's postgres:// format to Entity Framework format
+    var uri = new Uri(connectionString);
+    connectionString = $"Host={uri.Host};Port={uri.Port};Database={uri.AbsolutePath.Substring(1)};Username={uri.UserInfo.Split(':')[0]};Password={uri.UserInfo.Split(':')[1]};SSL Mode=Require;Trust Server Certificate=true";
+    Console.WriteLine("Using Railway PostgreSQL database");
+}
+else if (string.IsNullOrEmpty(connectionString))
+{
+    connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    Console.WriteLine("Using local PostgreSQL database");
+}
+
+// Configure services
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 
@@ -52,9 +64,9 @@ using (var scope = app.Services.CreateScope())
     {
         Console.WriteLine("Starting database initialization...");
         
-        // Ensure database is created
-        await context.Database.EnsureCreatedAsync();
-        Console.WriteLine("Database created/verified");
+        // Apply migrations (creates tables from migration files)
+        await context.Database.MigrateAsync();
+        Console.WriteLine("Database migrations applied successfully");
         
         // Check if data exists
         var deviceCount = await context.Devices.CountAsync();
@@ -64,7 +76,6 @@ using (var scope = app.Services.CreateScope())
         if (deviceCount == 0)
         {
             Console.WriteLine("No devices found, attempting to seed...");
-            Console.WriteLine("Looking for Data/test.json file...");
             
             if (File.Exists("Data/test.json"))
             {
@@ -88,15 +99,15 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"Database initialization error: {ex.Message}");
-        // Continue running even if seeding fails
+        Console.WriteLine($"Database error: {ex.Message}");
+        // Continue running even if database setup fails
     }
 }
 
 // Configure the HTTP request pipeline
 app.UseCors("AllowReactApp");
 
-// Enable Swagger in all environments
+// Enable Swagger in all environments for testing
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
@@ -109,10 +120,8 @@ app.UseAuthorization();
 app.MapControllers();
 
 // Configure port for both local and Railway
-var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
-var url = Environment.GetEnvironmentVariable("RAILWAY_ENVIRONMENT") != null 
-    ? $"http://0.0.0.0:{port}"
-    : $"http://localhost:{port}";
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+var url = $"http://0.0.0.0:{port}";
 
 Console.WriteLine($"Starting server on: {url}");
 Console.WriteLine($"Swagger available at: {url}/swagger");

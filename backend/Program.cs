@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Get connection string and convert Railway format to Entity Framework format
 var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
 
+Console.WriteLine($"Raw DATABASE_URL: '{connectionString}'");
 if (!string.IsNullOrEmpty(connectionString) && connectionString.StartsWith("postgres://"))
 {
     // Convert Railway's postgres:// format to Entity Framework format

@@ -10,17 +10,30 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
 
 Console.WriteLine($"Raw DATABASE_URL: '{connectionString}'");
-if (!string.IsNullOrEmpty(connectionString) && connectionString.StartsWith("postgres://"))
+
+if (!string.IsNullOrEmpty(connectionString) && (connectionString.StartsWith("postgres://") || connectionString.StartsWith("postgresql://")))
 {
-    // Convert Railway's postgres:// format to Entity Framework format
-    var uri = new Uri(connectionString);
-    connectionString = $"Host={uri.Host};Port={uri.Port};Database={uri.AbsolutePath.Substring(1)};Username={uri.UserInfo.Split(':')[0]};Password={uri.UserInfo.Split(':')[1]};SSL Mode=Require;Trust Server Certificate=true";
-    Console.WriteLine("Using Railway PostgreSQL database");
+    try
+    {
+        // Convert Railway's postgres:// or postgresql:// format to Entity Framework format
+        var uri = new Uri(connectionString);
+        var userInfo = uri.UserInfo.Split(':');
+        connectionString = $"Host={uri.Host};Port={uri.Port};Database={uri.AbsolutePath.Substring(1)};Username={userInfo[0]};Password={userInfo[1]};SSL Mode=Require;Trust Server Certificate=true";
+        Console.WriteLine("Using Railway PostgreSQL database");
+        Console.WriteLine($"Converted connection string: Host={uri.Host};Port={uri.Port};Database=***;Username={userInfo[0]};Password=***");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error converting connection string: {ex.Message}");
+        connectionString = null;
+    }
 }
-else if (string.IsNullOrEmpty(connectionString))
+
+if (string.IsNullOrEmpty(connectionString))
 {
     connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     Console.WriteLine("Using local PostgreSQL database");
+    Console.WriteLine($"Local connection string: {connectionString}");
 }
 
 // Configure services

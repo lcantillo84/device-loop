@@ -22,7 +22,7 @@ namespace backend.Controllers
             try
             {
                 // Look for devices.json in the wwwroot folder or project root
-                var jsonPath = Path.Combine(_environment.ContentRootPath, "Data", "devices.json");
+                var jsonPath = Path.Combine(_environment.ContentRootPath, "Data", "test.json");
                 
                 if (!System.IO.File.Exists(jsonPath))
                 {

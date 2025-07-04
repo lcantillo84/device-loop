@@ -1,113 +1,91 @@
 using backend.Data;
 using backend.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace backend.Services
 {
     public class DeviceDataSeeder
     {
         private readonly ApplicationDbContext _context;
-        private readonly ILogger<DeviceDataSeeder> _logger;
 
-        public DeviceDataSeeder(ApplicationDbContext context, ILogger<DeviceDataSeeder> logger)
+        public DeviceDataSeeder(ApplicationDbContext context)
         {
             _context = context;
-            _logger = logger;
         }
 
-        public async Task SeedFromJsonAsync(string jsonFilePath)
+        public async Task SeedFromJsonAsync(string jsonPath)
         {
-            if (_context.Devices.Any())
+            if (await _context.Devices.AnyAsync())
             {
-                _logger.LogInformation("Database already contains device data. Skipping seed.");
+                Console.WriteLine("Database already has data, skipping seed.");
                 return;
             }
 
-            try
+            if (!File.Exists(jsonPath))
             {
-                var jsonContent = await File.ReadAllTextAsync(jsonFilePath);
-                var jsonDevices = JsonSerializer.Deserialize<List<JsonDevice>>(jsonContent);
+                Console.WriteLine($"JSON file not found: {jsonPath}");
+                return;
+            }
 
-                if (jsonDevices == null || !jsonDevices.Any())
+            var json = await File.ReadAllTextAsync(jsonPath);
+            var deviceData = JsonSerializer.Deserialize<List<DeviceJsonModel>>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            if (deviceData == null) return;
+
+            var validDevices = deviceData
+                .Where(d => !string.IsNullOrWhiteSpace(d.Brand) && !string.IsNullOrWhiteSpace(d.ModelName))
+                .Select(d => new Device
                 {
-                    _logger.LogWarning("No devices found in JSON file");
-                    return;
-                }
+                    Brand = d.Brand.Trim(),
+                    ModelName = d.ModelName.Trim(),
+                    PriceUsd = ParseDecimal(d.PriceUsd),
+                    NetFlawlessPayout = ParseDecimal(d.NetFlawlessPayout),
+                    NetVeryGoodPayout = ParseDecimal(d.NetVeryGoodPayout),
+                    NetGoodPayout = ParseDecimal(d.NetGoodPayout),
+                    NetFairPayout = ParseDecimal(d.NetFairPayout),
+                    NetBrokenPayout = ParseDecimal(d.NetBrokenPayout)
+                })
+                .ToList();
 
-                var devices = jsonDevices.Select(MapJsonToDevice).ToList();
+            await _context.Devices.AddRangeAsync(validDevices);
+            await _context.SaveChangesAsync();
 
-                await _context.Devices.AddRangeAsync(devices);
-                await _context.SaveChangesAsync();
-
-                _logger.LogInformation($"Successfully seeded {devices.Count} devices from JSON");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error seeding device data from JSON");
-                throw;
-            }
+            Console.WriteLine($"✅ Seeded {validDevices.Count} devices from JSON");
         }
 
-        private static Device MapJsonToDevice(JsonDevice jsonDevice)
-        {
-            return new Device
-            {
-                Brand = jsonDevice.brand ?? string.Empty,
-                ModelName = jsonDevice.ModelName ?? string.Empty,
-                StorageGB = jsonDevice.storage_gb ?? string.Empty,
-                PriceUsd = ParseDecimal(jsonDevice.price_usd),
-                LaunchedYear = ParseInt(jsonDevice.LaunchedYear),
-                DaysUsed = ParseInt(jsonDevice.days_used),
-                PayoutBrandNew = ParseDecimal(jsonDevice.payout_brand_new),
-                PayoutFlawless = ParseDecimal(jsonDevice.payout_flawless),
-                PayoutVeryGood = ParseDecimal(jsonDevice.payout_very_good),
-                PayoutGood = ParseDecimal(jsonDevice.payout_good),
-                PayoutFair = ParseDecimal(jsonDevice.payout_fair),
-                PayoutBroken = ParseDecimal(jsonDevice.payout_broken),
-                TreeCostUsd = ParseDecimal(jsonDevice.tree_cost_usd),
-                OverheadCostUsd = ParseDecimal(jsonDevice.overhead_cost_usd),
-                NetBrandNewPayout = ParseDecimal(jsonDevice.net_brand_new_payout),
-                NetFlawlessPayout = ParseDecimal(jsonDevice.net_flawless_payout),
-                NetVeryGoodPayout = ParseDecimal(jsonDevice.net_very_good_payout),
-                NetGoodPayout = ParseDecimal(jsonDevice.net_good_payout),
-                NetFairPayout = ParseDecimal(jsonDevice.net_fair_payout),
-                NetBrokenPayout = ParseDecimal(jsonDevice.net_broken_payout)
-            };
-        }
-
-        private static decimal ParseDecimal(string? value)
-        {
-            return decimal.TryParse(value, out var result) ? result : 0m;
-        }
-
-        private static int ParseInt(string? value)
-        {
-            return int.TryParse(value, out var result) ? result : 0;
-        }
+        private static decimal ParseDecimal(string? value) =>
+            decimal.TryParse(value, out var result) ? result : 0m;
     }
 
-    // JSON mapping class - matches your JSON structure
-    public class JsonDevice
+    public class DeviceJsonModel
     {
-        public string? brand { get; set; }
-        public string? storage_gb { get; set; }
-        public string? price_usd { get; set; }
+        [JsonPropertyName("brand")]
+        public string? Brand { get; set; }
+
+        [JsonPropertyName("Model Name")]
         public string? ModelName { get; set; }
-        public string? LaunchedYear { get; set; }
-        public string? days_used { get; set; }
-        public string? payout_brand_new { get; set; }
-        public string? payout_flawless { get; set; }
-        public string? payout_very_good { get; set; }
-        public string? payout_good { get; set; }
-        public string? payout_fair { get; set; }
-        public string? payout_broken { get; set; }
-        public string? tree_cost_usd { get; set; }
-        public string? overhead_cost_usd { get; set; }
-        public string? net_brand_new_payout { get; set; }
-        public string? net_flawless_payout { get; set; }
-        public string? net_very_good_payout { get; set; }
-        public string? net_good_payout { get; set; }
-        public string? net_fair_payout { get; set; }
-        public string? net_broken_payout { get; set; }
+
+        [JsonPropertyName("price_usd")]
+        public string? PriceUsd { get; set; }
+
+        [JsonPropertyName("net_flawless_payout")]
+        public string? NetFlawlessPayout { get; set; }
+
+        [JsonPropertyName("net_very_good_payout")]
+        public string? NetVeryGoodPayout { get; set; }
+
+        [JsonPropertyName("net_good_payout")]
+        public string? NetGoodPayout { get; set; }
+
+        [JsonPropertyName("net_fair_payout")]
+        public string? NetFairPayout { get; set; }
+
+        [JsonPropertyName("net_broken_payout")]
+        public string? NetBrokenPayout { get; set; }
     }
 }

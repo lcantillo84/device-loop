@@ -3,12 +3,13 @@ using backend.Services;
 using backend.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Http.Headers;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.Configure<UpsSettings>(
     builder.Configuration.GetSection("UPS"));
 

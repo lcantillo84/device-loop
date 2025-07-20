@@ -33,6 +33,67 @@ export default function NavBar() {
         setIsDarkMode(!isDarkMode);
     };
 
+    // SVG Logo Component
+    const DeviceLoopLogo = ({ className = "" }) => (
+        <svg
+            width="220"
+            height="40"
+            viewBox="0 0 220 40"
+            xmlns="http://www.w3.org/2000/svg"
+            className={className}
+        >
+            <defs>
+                <linearGradient id="royalToForest" x1="0%" y1="50%" x2="100%" y2="50%">
+                    <stop offset="0%" style={{stopColor: '#1d4ed8', stopOpacity: 1}} />
+                    <stop offset="50%" style={{stopColor: '#3b82f6', stopOpacity: 1}} />
+                    <stop offset="100%" style={{stopColor: '#16a34a', stopOpacity: 1}} />
+                </linearGradient>
+            </defs>
+            <text
+                x="110"
+                y="27"
+                fontFamily="'Balsamiq Sans', 'Comic Sans MS', cursive, Arial, sans-serif"
+                fontSize="22"
+                fontWeight="700"
+                textAnchor="middle"
+                fill="url(#royalToForest)"
+            >
+                DeviceLoop
+            </text>
+        </svg>
+    );
+
+    // Compact Logo for smaller screens (just "DL")
+    const CompactLogo = ({ className = "" }) => (
+        <svg
+            width="48"
+            height="48"
+            viewBox="0 0 48 48"
+            xmlns="http://www.w3.org/2000/svg"
+            className={className}
+        >
+            <defs>
+                <linearGradient id="compactGradient" x1="0%" y1="50%" x2="100%" y2="50%">
+                    <stop offset="0%" style={{stopColor: '#1d4ed8', stopOpacity: 1}} />
+                    <stop offset="50%" style={{stopColor: '#3b82f6', stopOpacity: 1}} />
+                    <stop offset="100%" style={{stopColor: '#16a34a', stopOpacity: 1}} />
+                </linearGradient>
+            </defs>
+            <circle cx="24" cy="24" r="22" fill="url(#compactGradient)" opacity="0.1" />
+            <text
+                x="24"
+                y="32"
+                fontFamily="'Balsamiq Sans', 'Comic Sans MS', cursive, Arial, sans-serif"
+                fontSize="18"
+                fontWeight="700"
+                textAnchor="middle"
+                fill="url(#compactGradient)"
+            >
+                DL
+            </text>
+        </svg>
+    );
+
     return (
         <motion.nav
             initial={{ opacity: 0 }}
@@ -43,14 +104,19 @@ export default function NavBar() {
             <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
                 {/* Logo & Title */}
                 <a href="/" className="flex items-center">
-                    <img
-                        src="/images/icon.png"
-                        alt="DeviceLoop Logo"
-                        className="h-10 w-10 mr-2"
-                    />
-                    <span className="text-2xl font-bold text-black dark:text-white transition-colors duration-300">
+                    {/* Option 1: Full DeviceLoop logo (recommended for desktop) */}
+                    <DeviceLoopLogo className="hidden sm:block" />
+
+                    {/* Option 2: Compact DL logo for mobile */}
+                    <CompactLogo className="block sm:hidden" />
+
+                    {/* Option 3: If you prefer text alongside logo, uncomment below */}
+                    {/*
+                    <CompactLogo className="mr-2" />
+                    <span className="font-bold text-primary dark:text-white transition-colors duration-300">
                         DeviceLoop
                     </span>
+                    */}
                 </a>
 
                 {/* Desktop Links */}

@@ -34,65 +34,65 @@ export default function NavBar() {
     };
 
     // SVG Logo Component
-    const DeviceLoopLogo = ({ className = "" }) => (
-        <svg
-            width="220"
-            height="40"
-            viewBox="0 0 220 40"
-            xmlns="http://www.w3.org/2000/svg"
-            className={className}
-        >
-            <defs>
-                <linearGradient id="royalToForest" x1="0%" y1="50%" x2="100%" y2="50%">
-                    <stop offset="0%" style={{stopColor: '#1d4ed8', stopOpacity: 1}} />
-                    <stop offset="50%" style={{stopColor: '#3b82f6', stopOpacity: 1}} />
-                    <stop offset="100%" style={{stopColor: '#16a34a', stopOpacity: 1}} />
-                </linearGradient>
-            </defs>
-            <text
-                x="110"
-                y="27"
-                fontFamily="'Balsamiq Sans', 'Comic Sans MS', cursive, Arial, sans-serif"
-                fontSize="22"
-                fontWeight="700"
-                textAnchor="middle"
-                fill="url(#royalToForest)"
-            >
-                DeviceLoop
-            </text>
-        </svg>
-    );
+    // const DeviceLoopLogo = ({ className = "" }) => (
+    //     <svg
+    //         width="220"
+    //         height="40"
+    //         viewBox="0 0 220 40"
+    //         xmlns="http://www.w3.org/2000/svg"
+    //         className={className}
+    //     >
+    //         <defs>
+    //             <linearGradient id="royalToForest" x1="0%" y1="50%" x2="100%" y2="50%">
+    //                 <stop offset="0%" style={{stopColor: '#1d4ed8', stopOpacity: 1}} />
+    //                 <stop offset="50%" style={{stopColor: '#3b82f6', stopOpacity: 1}} />
+    //                 <stop offset="100%" style={{stopColor: '#16a34a', stopOpacity: 1}} />
+    //             </linearGradient>
+    //         </defs>
+    //         <text
+    //             x="110"
+    //             y="27"
+    //             fontFamily="'Balsamiq Sans', 'Comic Sans MS', cursive, Arial, sans-serif"
+    //             fontSize="22"
+    //             fontWeight="700"
+    //             textAnchor="middle"
+    //             fill="url(#royalToForest)"
+    //         >
+    //             DeviceLoop
+    //         </text>
+    //     </svg>
+    // );
 
     // Compact Logo for smaller screens (just "DL")
-    const CompactLogo = ({ className = "" }) => (
-        <svg
-            width="48"
-            height="48"
-            viewBox="0 0 48 48"
-            xmlns="http://www.w3.org/2000/svg"
-            className={className}
-        >
-            <defs>
-                <linearGradient id="compactGradient" x1="0%" y1="50%" x2="100%" y2="50%">
-                    <stop offset="0%" style={{stopColor: '#1d4ed8', stopOpacity: 1}} />
-                    <stop offset="50%" style={{stopColor: '#3b82f6', stopOpacity: 1}} />
-                    <stop offset="100%" style={{stopColor: '#16a34a', stopOpacity: 1}} />
-                </linearGradient>
-            </defs>
-            <circle cx="24" cy="24" r="22" fill="url(#compactGradient)" opacity="0.1" />
-            <text
-                x="24"
-                y="32"
-                fontFamily="'Balsamiq Sans', 'Comic Sans MS', cursive, Arial, sans-serif"
-                fontSize="18"
-                fontWeight="700"
-                textAnchor="middle"
-                fill="url(#compactGradient)"
-            >
-                DL
-            </text>
-        </svg>
-    );
+    // const CompactLogo = ({ className = "" }) => (
+    //     <svg
+    //         width="48"
+    //         height="48"
+    //         viewBox="0 0 48 48"
+    //         xmlns="http://www.w3.org/2000/svg"
+    //         className={className}
+    //     >
+    //         <defs>
+    //             <linearGradient id="compactGradient" x1="0%" y1="50%" x2="100%" y2="50%">
+    //                 <stop offset="0%" style={{stopColor: '#1d4ed8', stopOpacity: 1}} />
+    //                 <stop offset="50%" style={{stopColor: '#3b82f6', stopOpacity: 1}} />
+    //                 <stop offset="100%" style={{stopColor: '#16a34a', stopOpacity: 1}} />
+    //             </linearGradient>
+    //         </defs>
+    //         <circle cx="24" cy="24" r="22" fill="url(#compactGradient)" opacity="0.1" />
+    //         <text
+    //             x="24"
+    //             y="32"
+    //             fontFamily="'Balsamiq Sans', 'Comic Sans MS', cursive, Arial, sans-serif"
+    //             fontSize="18"
+    //             fontWeight="700"
+    //             textAnchor="middle"
+    //             fill="url(#compactGradient)"
+    //         >
+    //             DL
+    //         </text>
+    //     </svg>
+    // );
 
     return (
         <motion.nav
@@ -101,14 +101,21 @@ export default function NavBar() {
             transition={{ duration: 0.5 }}
             className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 shadow-sm transition-colors duration-300"
         >
-            <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+            <div className="max-w-7xl mx-auto flex items-center justify-between">
                 {/* Logo & Title */}
                 <a href="/" className="flex items-center">
                     {/* Option 1: Full DeviceLoop logo (recommended for desktop) */}
-                    <DeviceLoopLogo className="hidden sm:block" />
+                    {/*<DeviceLoopLogo className="hidden sm:block" />*/}
 
+                    <a href="/" className="flex items-center">
+                        <img
+                            src="/images/icon.png"
+                            alt="DeviceLoop Logo"
+                            className="h-12 w-auto sm:h-14 md:h-16"
+                        />
+                    </a>
                     {/* Option 2: Compact DL logo for mobile */}
-                    <CompactLogo className="block sm:hidden" />
+                    {/*<CompactLogo className="block sm:hidden"/>*/}
 
                     {/* Option 3: If you prefer text alongside logo, uncomment below */}
                     {/*
@@ -121,10 +128,12 @@ export default function NavBar() {
 
                 {/* Desktop Links */}
                 <div className="hidden md:flex space-x-6 items-center">
-                    <a href="/" className="text-base font-medium text-primary dark:text-green-400 hover:text-accent dark:hover:text-green-300 transition-colors duration-300">
+                    <a href="/"
+                       className="text-base font-medium text-primary dark:text-green-400 hover:text-accent dark:hover:text-green-300 transition-colors duration-300">
                         Home
                     </a>
-                    <a href="/#about" className="text-base font-medium text-primary dark:text-green-400 hover:text-accent dark:hover:text-green-300 transition-colors duration-300">
+                    <a href="/#about"
+                       className="text-base font-medium text-primary dark:text-green-400 hover:text-accent dark:hover:text-green-300 transition-colors duration-300">
                         About
                     </a>
                     <a href="/#how-it-works" className="text-base font-medium text-primary dark:text-green-400 hover:text-accent dark:hover:text-green-300 transition-colors duration-300">

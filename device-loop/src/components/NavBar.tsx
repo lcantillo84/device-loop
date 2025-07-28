@@ -101,30 +101,31 @@ export default function NavBar() {
             transition={{ duration: 0.5 }}
             className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 shadow-sm transition-colors duration-300"
         >
-            <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="max-w-7xl mx-auto  flex items-center justify-between">
                 {/* Logo & Title */}
                 <a href="/" className="flex items-center">
-                    {/* Option 1: Full DeviceLoop logo (recommended for desktop) */}
-                    {/*<DeviceLoopLogo className="hidden sm:block" />*/}
+                    <img
+                        src="/images/icon.png"
+                        alt="DeviceLoop Logo"
+                        className="h-12 w-auto sm:h-14 md:h-16"
+                    />
+                </a>
+                {/*<a href="/" className="flex items-center">*/}
+                {/* Option 1: Full DeviceLoop logo (recommended for desktop) */}
+                {/*<DeviceLoopLogo className="hidden sm:block" />*/}
 
-                    <a href="/" className="flex items-center">
-                        <img
-                            src="/images/icon.png"
-                            alt="DeviceLoop Logo"
-                            className="h-12 w-auto sm:h-14 md:h-16"
-                        />
-                    </a>
-                    {/* Option 2: Compact DL logo for mobile */}
-                    {/*<CompactLogo className="block sm:hidden"/>*/}
 
-                    {/* Option 3: If you prefer text alongside logo, uncomment below */}
-                    {/*
+                {/* Option 2: Compact DL logo for mobile */}
+                {/*<CompactLogo className="block sm:hidden"/>*/}
+
+                {/* Option 3: If you prefer text alongside logo, uncomment below */}
+                {/*
                     <CompactLogo className="mr-2" />
                     <span className="font-bold text-primary dark:text-white transition-colors duration-300">
                         DeviceLoop
                     </span>
                     */}
-                </a>
+                {/*</a>*/}
 
                 {/* Desktop Links */}
                 <div className="hidden md:flex space-x-6 items-center">
@@ -136,10 +137,12 @@ export default function NavBar() {
                        className="text-base font-medium text-primary dark:text-green-400 hover:text-accent dark:hover:text-green-300 transition-colors duration-300">
                         About
                     </a>
-                    <a href="/#how-it-works" className="text-base font-medium text-primary dark:text-green-400 hover:text-accent dark:hover:text-green-300 transition-colors duration-300">
+                    <a href="/#how-it-works"
+                       className="text-base font-medium text-primary dark:text-green-400 hover:text-accent dark:hover:text-green-300 transition-colors duration-300">
                         How It Works
                     </a>
-                    <a href="/#pricedevice" className="text-base font-medium text-primary dark:text-green-400 hover:text-accent dark:hover:text-green-300 transition-colors duration-300">
+                    <a href="/#pricedevice"
+                       className="text-base font-medium text-primary dark:text-green-400 hover:text-accent dark:hover:text-green-300 transition-colors duration-300">
                         Price Your Device
                     </a>
 
@@ -150,13 +153,14 @@ export default function NavBar() {
                         aria-label="Toggle theme"
                     >
                         {isDarkMode ? (
-                            <Sun className="h-5 w-5 text-yellow-500" />
+                            <Sun className="h-5 w-5 text-yellow-500"/>
                         ) : (
-                            <Moon className="h-5 w-5 text-gray-600" />
+                            <Moon className="h-5 w-5 text-gray-600"/>
                         )}
                     </button>
 
-                    <a href="/#badge" className="btn btn-outline btn-primary dark:btn-outline dark:border-green-400 dark:text-green-400 dark:hover:bg-green-400 dark:hover:text-gray-900 px-4 py-1 ml-4 transition-colors duration-300">
+                    <a href="/#badge"
+                       className="btn btn-outline btn-primary dark:btn-outline dark:border-green-400 dark:text-green-400 dark:hover:bg-green-400 dark:hover:text-gray-900 px-4 py-1 ml-4 transition-colors duration-300">
                         Upload Selfie
                     </a>
                     <a
@@ -176,9 +180,9 @@ export default function NavBar() {
                         aria-label="Toggle theme"
                     >
                         {isDarkMode ? (
-                            <Sun className="h-5 w-5 text-yellow-500" />
+                            <Sun className="h-5 w-5 text-yellow-500"/>
                         ) : (
-                            <Moon className="h-5 w-5 text-gray-600" />
+                            <Moon className="h-5 w-5 text-gray-600"/>
                         )}
                     </button>
 
@@ -188,7 +192,7 @@ export default function NavBar() {
                         aria-label="Toggle Menu"
                         className="p-2 focus:outline-none text-black dark:text-white transition-colors duration-300"
                     >
-                        {menuOpen ? <X size={24} /> : <Menu size={24} />}
+                        {menuOpen ? <X size={24}/> : <Menu size={24}/>}
                     </button>
                 </div>
             </div>
@@ -196,9 +200,9 @@ export default function NavBar() {
             {/* Mobile Menu Panel */}
             {menuOpen && (
                 <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    transition={{ duration: 0.3 }}
+                    initial={{height: 0, opacity: 0}}
+                    animate={{height: 'auto', opacity: 1}}
+                    transition={{duration: 0.3}}
                     className="md:hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-gray-200 dark:border-gray-700 transition-colors duration-300"
                 >
                     <div className="flex flex-col px-6 py-4 space-y-3">
